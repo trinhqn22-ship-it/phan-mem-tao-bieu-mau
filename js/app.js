@@ -244,6 +244,9 @@ function bindActions() {
         element.style.transform = 'none';
         element.style.marginBottom = '0';
 
+        // Bắt buộc đợi trình duyệt render lại DOM sau khi bỏ transform
+        await new Promise(resolve => setTimeout(resolve, 50));
+
         const opt = {
             margin:       [10, 12, 10, 12], 
             filename:     filename.replace(/\//g, '_'),
@@ -264,24 +267,28 @@ function bindActions() {
             }
         };
 
-        // Tạo PDF và nhúng watermark trực tiếp vào từng trang PDF (tránh lỗi lệch trang do html2pdf cắt trang tự động)
-        await html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
-            if (watermarkBase64) {
-                const totalPages = pdf.internal.getNumberOfPages();
-                for (let i = 1; i <= totalPages; i++) {
-                    pdf.setPage(i);
-                    // Kích thước A4 là 210x297. Watermark 147x207.9. Tọa độ tâm là 31.5, 44.55
-                    pdf.addImage(watermarkBase64, 'PNG', 31.5, 44.55, 147, 207.9);
+        try {
+            // Tạo PDF và nhúng watermark trực tiếp vào từng trang PDF
+            await html2pdf().set(opt).from(element).toPdf().get('pdf').then(function (pdf) {
+                if (watermarkBase64) {
+                    const totalPages = pdf.internal.getNumberOfPages();
+                    for (let i = 1; i <= totalPages; i++) {
+                        pdf.setPage(i);
+                        pdf.addImage(watermarkBase64, 'PNG', 31.5, 44.55, 147, 207.9);
+                    }
                 }
-            }
-        }).save();
-
-        // Dọn dẹp DOM
-        element.style.padding = originalPadding;
-        element.style.width = originalWidth;
-        element.style.transform = originalTransform;
-        element.style.marginBottom = originalMarginBottom;
-        if (originalWm) originalWm.style.display = 'flex';
+            }).save();
+        } catch (err) {
+            alert("Lỗi xuất PDF: " + err.message);
+            console.error(err);
+        } finally {
+            // Dọn dẹp DOM
+            element.style.padding = originalPadding;
+            element.style.width = originalWidth;
+            element.style.transform = originalTransform;
+            element.style.marginBottom = originalMarginBottom;
+            if (originalWm) originalWm.style.display = 'flex';
+        }
     });
 }
 
