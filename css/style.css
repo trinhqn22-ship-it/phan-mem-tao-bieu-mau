@@ -603,12 +603,15 @@ p, li {
     }
     .preview-scroll {
         display: none; /* Hidden by default on mobile */
-        overflow-x: auto;
-        padding: 10px;
+        overflow-x: hidden;
+        padding: 0;
+        align-items: center;
+        justify-content: center;
     }
     .paper-a4 {
-        transform: none;
-        margin: 0 auto 20px auto;
+        transform: scale(0.46);
+        transform-origin: top left;
+        margin-bottom: calc(-297mm * 0.54); /* Thu hồi lại khoảng trống bị dư thừa do scale */
     }
     
     /* Flow Mode: Preview Active */

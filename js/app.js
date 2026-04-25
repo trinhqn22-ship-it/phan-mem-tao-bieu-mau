@@ -113,6 +113,16 @@ function bindActions() {
         updatePreview();
     });
 
+    // Reset Form
+    document.getElementById('btn-reset-form')?.addEventListener('click', () => {
+        if(confirm('Bạn có chắc chắn muốn xóa toàn bộ dữ liệu đang nhập để tạo biểu mẫu mới?')) {
+            state = JSON.parse(JSON.stringify(defaultData));
+            bindInputs();
+            renderItemsForm();
+            updatePreview();
+        }
+    });
+
     // Save Local
     document.getElementById('btn-save-local').addEventListener('click', () => {
         localStorage.setItem('formData', JSON.stringify(state));
@@ -260,9 +270,14 @@ function bindActions() {
         // Độ rộng nội dung 186mm (để bù 12mm lề mỗi bên thành 210mm)
         const originalPadding = element.style.padding;
         const originalWidth = element.style.width;
+        const originalTransform = element.style.transform;
+        const originalMarginBottom = element.style.marginBottom;
         
         element.style.padding = '0';
         element.style.width = '186mm';
+        // Xóa thuộc tính scale thu nhỏ màn hình mobi để xuất PDF chuẩn 100%
+        element.style.transform = 'none';
+        element.style.marginBottom = '0';
 
         const opt = {
             margin:       [10, 12, 10, 12], 
@@ -299,6 +314,8 @@ function bindActions() {
         // Dọn dẹp DOM
         element.style.padding = originalPadding;
         element.style.width = originalWidth;
+        element.style.transform = originalTransform;
+        element.style.marginBottom = originalMarginBottom;
         if (originalWm) originalWm.style.display = 'flex';
     });
 }
@@ -405,6 +422,9 @@ function updatePreview() {
     }
 
     container.innerHTML = html;
+    
+    // Tự động lưu mỗi khi có thay đổi
+    localStorage.setItem('formData', JSON.stringify(state));
 }
 
 function autoFitOrder() {
