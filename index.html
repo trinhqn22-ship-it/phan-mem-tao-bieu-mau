@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Tạo Biểu Mẫu Hành Chính</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- html2pdf for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Input -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fa-solid fa-file-invoice"></i> Tạo Biểu Mẫu</h2>
+                <p>Nhập 1 lần - Xuất 3 biểu mẫu</p>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab-company">Công ty</button>
+                <button class="tab-btn" data-tab="tab-customer">Khách hàng</button>
+                <button class="tab-btn" data-tab="tab-doc">Chứng từ</button>
+                <button class="tab-btn" data-tab="tab-items">Hàng hóa</button>
+                <button class="tab-btn" data-tab="tab-ai"><i class="fa-solid fa-wand-magic-sparkles"></i> AI</button>
+                <button class="tab-btn" data-tab="tab-settings"><i class="fa-solid fa-gear"></i></button>
+            </div>
+
+            <div class="form-content">
+                <!-- Tab Công ty -->
+                <div id="tab-company" class="tab-pane active">
+                    <div class="form-group">
+                        <label>Tên đơn vị bán hàng</label>
+                        <input type="text" id="companyName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Mã số thuế</label>
+                        <input type="text" id="companyTax" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Điện thoại</label>
+                            <input type="text" id="companyPhone" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Người liên hệ</label>
+                            <input type="text" id="companyContact" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ</label>
+                        <input type="text" id="companyAddress" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Số tài khoản</label>
+                            <input type="text" id="companyAccount" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Ngân hàng</label>
+                            <input type="text" id="companyBank" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Chi nhánh ngân hàng</label>
+                        <input type="text" id="companyBranch" class="form-control">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Đại diện ký tên</label>
+                            <input type="text" id="companyRep" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Chức vụ</label>
+                            <input type="text" id="companyRepRole" class="form-control">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Khách hàng -->
+                <div id="tab-customer" class="tab-pane">
+                    <div class="form-group">
+                        <label>Tên khách hàng / Công ty</label>
+                        <input type="text" id="customerName" class="form-control" placeholder="Ví dụ: CÔNG TY TNHH BẢO THẠCH">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Người đại diện</label>
+                            <input type="text" id="customerRep" class="form-control" placeholder="Ví dụ: VÕ XUÂN THỦY">
+                        </div>
+                        <div class="form-group">
+                            <label>Chức vụ</label>
+                            <input type="text" id="customerRole" class="form-control" placeholder="Ví dụ: Giám đốc">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mã số thuế</label>
+                            <input type="text" id="customerTax" class="form-control" placeholder="Ví dụ: 4100483478">
+                        </div>
+                        <div class="form-group">
+                            <label>Số CCCD</label>
+                            <input type="text" id="customerId" class="form-control" placeholder="Nhập CCCD (nếu có)">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Điện thoại</label>
+                            <input type="text" id="customerPhone" class="form-control" placeholder="Ví dụ: 0987 654 321">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" id="customerEmail" class="form-control" placeholder="Ví dụ: abc@gmail.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ công ty</label>
+                        <input type="text" id="customerAddress" class="form-control" placeholder="Ví dụ: Thôn Ngọc Thạnh 2, Xã Tuy Phước Tây...">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ theo CCCD</label>
+                        <input type="text" id="customerIdAddress" class="form-control" placeholder="Nhập địa chỉ theo CCCD">
+                    </div>
+                    <div class="form-group">
+                        <label>Địa điểm giao hàng</label>
+                        <input type="text" id="deliveryAddress" class="form-control" placeholder="Ví dụ: Tại kho bên A chỉ định...">
+                    </div>
+                </div>
+
+                <!-- Tab Chứng từ -->
+                <div id="tab-doc" class="tab-pane">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Số đơn đặt hàng</label>
+                            <input type="text" id="orderNo" class="form-control" placeholder="Ví dụ: 01/ĐH-ML">
+                        </div>
+                        <div class="form-group">
+                            <label>Số báo giá</label>
+                            <input type="text" id="quoteNo" class="form-control" placeholder="Ví dụ: 1704/2026/BG-ML-BT">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Số hợp đồng</label>
+                        <input type="text" id="contractNo" class="form-control" placeholder="Ví dụ: 1704/2026/HĐKT-ML-BT">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ngày lập</label>
+                            <input type="date" id="docDate" class="form-control" placeholder="Chọn ngày lập">
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày ký HĐ</label>
+                            <input type="date" id="contractDate" class="form-control" placeholder="Chọn ngày ký">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Thời gian giao hàng</label>
+                        <input type="text" id="deliveryTime" class="form-control" placeholder="Ví dụ: 15-20 ngày hoặc ngày 27">
+                    </div>
+                    <div class="form-group">
+                        <label>Nội dung / diễn giải (Ghi chú chung)</label>
+                        <textarea id="docNote" class="form-control" rows="3" placeholder="Ví dụ: Báo giá đã bao gồm phí in ấn và giao hàng..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Tab Hàng hóa -->
+                <div id="tab-items" class="tab-pane">
+                    <div class="items-header">
+                        <h3>Danh sách sản phẩm</h3>
+                    </div>
+                    <div id="items-container">
+                        <!-- Items will be generated here -->
+                    </div>
+                    <button id="btn-add-item" class="btn btn-outline" style="width: 100%; margin-top: 10px; border-style: dashed; padding: 10px; color: var(--primary-color); border-color: var(--primary-color);">
+                        <i class="fa-solid fa-plus"></i> Thêm sản phẩm mới
+                    </button>
+                </div>
+
+                <!-- Tab Cài đặt -->
+                <div id="tab-settings" class="tab-pane">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Thuế GTGT (%)</label>
+                            <input type="number" id="vatPercent" class="form-control" value="8">
+                        </div>
+                        <div class="form-group">
+                            <label>Tỷ lệ đặt cọc (%)</label>
+                            <input type="number" id="depositPercent" class="form-control" value="50">
+                        </div>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="showVat" checked>
+                        <label for="showVat">Áp dụng tính thuế GTGT</label>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="showWatermark" checked>
+                        <label for="showWatermark">Hiển thị Watermark mờ</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Ảnh Watermark (Logo)</label>
+                        <input type="file" id="watermarkImage" accept="image/*" class="form-control">
+                        <small style="color: var(--text-muted); display: block; margin-top: 5px;">Chọn ảnh logo để làm chữ chìm.</small>
+                    </div>
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid var(--border-color);">
+                    <div class="form-group">
+                        <label><i class="fa-solid fa-cloud-arrow-up"></i> Google Sheets Webhook URL</label>
+                        <div class="input-group" style="display: flex; gap: 5px;">
+                            <input type="password" id="sheetWebhookUrl" class="form-control" placeholder="Nhập URL của Google Apps Script...">
+                            <button type="button" id="btn-toggle-sheet-key" class="btn btn-outline" title="Hiện/Ẩn URL"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                        <small style="color: var(--text-muted); display: block; margin-top: 5px;">Link dùng để đồng bộ Đơn hàng lên file Excel của công ty.</small>
+                        <button id="btn-save-sheet-url" class="btn btn-primary btn-sm" style="margin-top: 10px;">Lưu URL Đồng Bộ</button>
+                    </div>
+                </div>
+
+                <!-- Tab AI Nhập -->
+                <div id="tab-ai" class="tab-pane">
+                    <div class="api-config-box" style="background: #f8fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid var(--border-color);">
+                        <div class="form-group" style="margin-bottom: 10px;">
+                            <label>Cấu hình Gemini API Key</label>
+                            <div class="input-group" style="display: flex; gap: 5px;">
+                                <input type="password" id="aiApiKey" class="form-control" placeholder="Nhập API Key bắt đầu bằng AIza...">
+                                <button type="button" id="btn-toggle-key" class="btn btn-outline" title="Hiện/Ẩn Key"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                            <small style="color: var(--text-muted); display: block; margin-top: 5px; font-style: italic;">API Key chỉ lưu trên máy của bạn, không hardcode vào code</small>
+                        </div>
+                        <div class="action-buttons" style="margin-bottom: 10px; justify-content: flex-start;">
+                            <button id="btn-save-key" class="btn btn-primary btn-sm">Lưu API Key</button>
+                            <button id="btn-test-key" class="btn btn-outline btn-sm">Kiểm tra kết nối</button>
+                            <button id="btn-delete-key" class="btn btn-danger btn-sm">Xóa API Key</button>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <small id="key-status-text" style="font-weight: 500;">Trạng thái: <span>Chưa cấu hình API Key</span></small>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="display: none;">
+                        <label>Chọn Model</label>
+                        <select id="aiModel" class="form-control">
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Dán nội dung chat khách hàng vào đây...</label>
+                        <textarea id="aiInputText" class="form-control" rows="8" placeholder="Bên anh lấy 50 áo polo 120k, VAT 8%, cọc 5tr..."></textarea>
+                    </div>
+                    <div class="action-buttons" style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <button id="btn-analyze-ai" class="btn btn-primary" style="flex: 1;"><i class="fa-solid fa-wand-magic-sparkles"></i> Phân tích</button>
+                        <button id="btn-fill-form" class="btn btn-secondary" style="flex: 1;" disabled><i class="fa-solid fa-check"></i> Điền vào biểu mẫu</button>
+                    </div>
+                    
+                    <div id="ai-loading" style="display:none; text-align: center; margin-bottom: 15px;">
+                        <i class="fa-solid fa-spinner fa-spin"></i> Đang phân tích...
+                    </div>
+
+                    <!-- Ẩn preview JSON theo yêu cầu -->
+                    <textarea id="aiOutputJson" style="display:none;"></textarea>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <div class="action-buttons" style="flex-wrap: wrap;">
+                    <button id="btn-sync-cloud" class="btn btn-primary" title="Đồng bộ dữ liệu lên Google Sheets" style="width: 100%; margin-bottom: 5px;"><i class="fa-solid fa-cloud-arrow-up"></i> Đồng bộ lên Sheets</button>
+                    <button id="btn-save-local" class="btn btn-outline" title="Lưu mẫu"><i class="fa-solid fa-floppy-disk"></i> Lưu cục bộ</button>
+                    <button id="btn-export-json" class="btn btn-outline" title="Tải dữ liệu"><i class="fa-solid fa-download"></i> Tải DL</button>
+                    <label class="btn btn-outline mb-0" title="Nhập dữ liệu" style="cursor:pointer;">
+                        <i class="fa-solid fa-upload"></i> Nhập DL
+                        <input type="file" id="file-import-json" accept=".json" style="display:none">
+                    </label>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Preview -->
+        <main class="preview-area">
+            <div class="preview-toolbar">
+                <div class="doc-type-selector">
+                    <button class="btn-doc active" data-type="order">Đơn Đặt Hàng</button>
+                    <button class="btn-doc" data-type="quote">Bảng Báo Giá</button>
+                    <button class="btn-doc" data-type="contract">Hợp Đồng</button>
+                </div>
+                <div class="preview-actions">
+                    <button id="btn-print" class="btn btn-primary"><i class="fa-solid fa-print"></i> In</button>
+                    <button id="btn-pdf" class="btn btn-success"><i class="fa-solid fa-file-pdf"></i> Xuất PDF</button>
+                </div>
+            </div>
+            
+            <div class="preview-scroll">
+                <!-- Vùng hiển thị trang in -->
+                <div id="preview-content" class="paper-a4">
+                    <!-- Nội dung sẽ được render tại đây -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/watermarkBase64.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/keyManager.js"></script>
+    <script src="js/geminiService.js"></script>
+    <script src="js/parser.js"></script>
+    <script src="js/mapper.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
