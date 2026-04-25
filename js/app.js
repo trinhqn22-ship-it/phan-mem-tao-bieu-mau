@@ -123,12 +123,6 @@ function bindActions() {
         }
     });
 
-    // Save Local
-    document.getElementById('btn-save-local').addEventListener('click', () => {
-        localStorage.setItem('formData', JSON.stringify(state));
-        alert('Đã lưu dữ liệu vào trình duyệt!');
-    });
-
     // Sync to Google Sheets
     const inputSheetUrl = document.getElementById('sheetWebhookUrl');
     const savedSheetUrl = KeyManager.loadSheetUrl();
@@ -156,7 +150,7 @@ function bindActions() {
 
         const btn = document.getElementById('btn-sync-cloud');
         const originalText = btn.innerHTML;
-        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang đồng bộ...';
+        btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Đang lưu...';
         btn.disabled = true;
 
         try {
@@ -186,9 +180,9 @@ function bindActions() {
             if (response.ok) {
                 const result = await response.json();
                 if(result.status === 'success') {
-                    alert('Đã đồng bộ đơn hàng lên Google Sheets thành công!');
+                    alert('Đã lưu đơn hàng lên Google Sheets thành công!');
                 } else {
-                    alert('Đồng bộ thất bại: ' + result.message);
+                    alert('Lưu thất bại: ' + result.message);
                 }
             } else {
                 throw new Error('Lỗi kết nối tới Google Sheets');
@@ -200,35 +194,6 @@ function bindActions() {
             btn.innerHTML = originalText;
             btn.disabled = false;
         }
-    });
-
-    // Export JSON
-    document.getElementById('btn-export-json').addEventListener('click', () => {
-        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(state, null, 2));
-        const dlAnchorElem = document.createElement('a');
-        dlAnchorElem.setAttribute("href", dataStr);
-        dlAnchorElem.setAttribute("download", `BieuMau_${new Date().getTime()}.json`);
-        dlAnchorElem.click();
-    });
-
-    // Import JSON
-    document.getElementById('file-import-json').addEventListener('change', (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            try {
-                const imported = JSON.parse(event.target.result);
-                state = imported;
-                bindInputs(); // update values in DOM
-                renderItemsForm();
-                updatePreview();
-                alert('Đã tải dữ liệu thành công!');
-            } catch (err) {
-                alert('File không hợp lệ!');
-            }
-        };
-        reader.readAsText(file);
     });
 
     // Print
