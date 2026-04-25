@@ -598,24 +598,11 @@ p, li {
         gap: 10px;
     }
     .paper-a4 {
-        transform: scale(0.45);
-        transform-origin: top center;
-        margin-bottom: -150%; /* compensate for scaled height so container shrinks */
+        transform: none;
+        margin: 0 auto 20px auto;
     }
     .preview-scroll {
-        overflow-x: hidden;
-    }
-}
-
-@media (min-width: 400px) and (max-width: 768px) {
-    .paper-a4 {
-        transform: scale(0.55);
-        margin-bottom: -120%;
-    }
-}
-@media (min-width: 500px) and (max-width: 768px) {
-    .paper-a4 {
-        transform: scale(0.7);
-        margin-bottom: -80%;
+        overflow-x: auto;
+        padding: 10px;
     }
 }
