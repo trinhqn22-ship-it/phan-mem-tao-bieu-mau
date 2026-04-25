@@ -45,8 +45,23 @@ function bindTabs() {
             docBtns.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             updatePreview();
+            
+            // Switch to preview mode on mobile
+            document.body.classList.add('mobile-preview-mode');
+            // Scroll to top of preview
+            window.scrollTo(0, 0);
         });
     });
+
+    // Mobile Back Button logic
+    const btnBackInput = document.getElementById('btn-back-input');
+    if (btnBackInput) {
+        btnBackInput.addEventListener('click', () => {
+            document.body.classList.remove('mobile-preview-mode');
+            // Scroll to top of input form
+            window.scrollTo(0, 0);
+        });
+    }
 }
 
 function bindInputs() {
