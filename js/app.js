@@ -505,6 +505,19 @@ function generateItemsTable(totals) {
 function generateOrder() {
     const totals = calculateTotals();
     
+    let idLabel = "Số CCCD";
+    let idValue = state.customerId;
+    let addressLabel = "Địa chỉ theo CCCD";
+    
+    const customerNameLower = (state.customerName || '').toLowerCase();
+    const isCompany = customerNameLower.includes('công ty') || customerNameLower.includes('cty') || customerNameLower.includes('tnhh') || customerNameLower.includes('cp') || customerNameLower.includes('doanh nghiệp');
+    
+    if ((isCompany || (state.customerTax && state.customerTax.trim() !== '')) && state.customerTax && state.customerTax.trim() !== '') {
+        idLabel = "Mã số thuế";
+        idValue = state.customerTax;
+        addressLabel = "Địa chỉ";
+    }
+    
     return `
         <table class="header-table">
             <tr>
@@ -545,11 +558,11 @@ function generateOrder() {
                 <td>: ${state.customerPhone}</td>
             </tr>
             <tr>
-                <td class="text-bold">Số CCCD</td>
-                <td>: ${state.customerId}</td>
+                <td class="text-bold">${idLabel}</td>
+                <td>: ${idValue}</td>
             </tr>
             <tr>
-                <td class="text-bold">Địa chỉ theo CCCD</td>
+                <td class="text-bold">${addressLabel}</td>
                 <td>: ${state.customerIdAddress || state.customerAddress}</td>
             </tr>
             <tr>
