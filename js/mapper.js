@@ -48,15 +48,12 @@ function mapAIToState(aiData) {
     }
 
     // Map Cài đặt Tiền cọc
-    if (aiData.depositPercent !== null && aiData.depositPercent !== undefined) {
-        state.depositPercent = aiData.depositPercent;
-    }
-
-    // Nếu có cọc tiền cứng (Vd: cọc 5 triệu)
-    if (aiData.depositAmount && !aiData.depositPercent) {
-        state.depositAmountFixed = aiData.depositAmount;
-    } else {
-        state.depositAmountFixed = null;
+    if (aiData.depositAmount) {
+        state.depositValue = aiData.depositAmount;
+        state.depositType = "VND";
+    } else if (aiData.depositPercent !== null && aiData.depositPercent !== undefined) {
+        state.depositValue = aiData.depositPercent;
+        state.depositType = "%";
     }
 
     // Map Danh sách hàng hóa

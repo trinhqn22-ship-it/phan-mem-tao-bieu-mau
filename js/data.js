@@ -37,8 +37,8 @@ const defaultData = {
 
     // Cài đặt chung
     vatPercent: 8,
-    depositPercent: 50,
-    depositAmountFixed: "",
+    depositValue: 50,
+    depositType: "%",
     showVat: true,
     showWatermark: true,
     watermarkText: "MRS LINH UNIFORM"

@@ -90,13 +90,6 @@ function bindInputs() {
 }
 
 function bindActions() {
-    // Clear fixed deposit if user changes deposit percent
-    document.getElementById('depositPercent')?.addEventListener('input', () => {
-        state.depositAmountFixed = '';
-        const elFixed = document.getElementById('depositAmountFixed');
-        if (elFixed) elFixed.value = '';
-    });
-
     // Watermark Image Upload
     document.getElementById('watermarkImage')?.addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -359,15 +352,12 @@ function calculateTotals() {
     }
 
     const total = subtotal + vat;
-    let deposit = total * (state.depositPercent / 100);
-
-    // Xử lý tiền cọc cứng (từ AI)
-    if (state.depositAmountFixed && state.depositAmountFixed > 0) {
-        deposit = state.depositAmountFixed;
-        // Cập nhật lại phần trăm hiển thị ở ô input (nếu muốn)
-        state.depositPercent = parseFloat((deposit / total * 100).toFixed(2)) || 0;
-        const dpEl = document.getElementById('depositPercent');
-        if(dpEl) dpEl.value = state.depositPercent;
+    
+    let deposit = 0;
+    if (state.depositType === 'VND') {
+        deposit = state.depositValue || 0;
+    } else {
+        deposit = total * ((state.depositValue || 0) / 100);
     }
 
     const remain = total - deposit;
