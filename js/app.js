@@ -344,8 +344,10 @@ function calculateTotals() {
         subtotal += item.qty * item.price;
     });
 
+    const hasTaxOrId = (state.customerTax && state.customerTax.trim() !== '') || (state.customerId && state.customerId.trim() !== '');
+
     let vat = 0;
-    if (state.showVat) {
+    if (state.showVat && hasTaxOrId) {
         vat = subtotal * (state.vatPercent / 100);
     }
 
@@ -462,7 +464,8 @@ function generateItemsTable(totals) {
     });
 
     let vatRow = '';
-    if (state.showVat) {
+    const hasTaxOrId = (state.customerTax && state.customerTax.trim() !== '') || (state.customerId && state.customerId.trim() !== '');
+    if (state.showVat && hasTaxOrId) {
         vatRow = `
             <tr>
                 <td colspan="5" class="text-bold">Tiền thuế GTGT ${state.vatPercent}%</td>
@@ -504,6 +507,8 @@ function generateItemsTable(totals) {
 
 function generateOrder() {
     const totals = calculateTotals();
+    const hasTaxOrId = (state.customerTax && state.customerTax.trim() !== '') || (state.customerId && state.customerId.trim() !== '');
+    const invoiceText = hasTaxOrId ? ' và hóa đơn GTGT.' : '.';
     
     let idLabel = "Số CCCD";
     let idValue = state.customerId;
@@ -576,7 +581,7 @@ function generateOrder() {
         <div style="margin-top: 15px; font-size: 11pt;" class="notes-section">
             <div class="text-bold text-decoration-underline" style="margin-bottom: 5px; text-decoration: underline;">Ghi chú:</div>
             - Thời gian giao hàng : ${state.deliveryTime || 'Theo thỏa thuận'}.<br>
-            - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa và hóa đơn GTGT.<br>
+            - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa${invoiceText}<br>
             - Số tài khoản thanh toán : <b>${state.companyAccount} ${state.companyRep}</b> – Tại ${state.companyBank}, ${state.companyBranch}.<br>
             - Địa điểm giao hàng : ${state.deliveryAddress || state.customerAddress}<br>
         </div>
@@ -598,6 +603,8 @@ function generateOrder() {
 
 function generateQuote() {
     const totals = calculateTotals();
+    const hasTaxOrId = (state.customerTax && state.customerTax.trim() !== '') || (state.customerId && state.customerId.trim() !== '');
+    const invoiceText = hasTaxOrId ? ' và hóa đơn GTGT.' : '.';
     const notes = state.docNote.trim() ? state.docNote.trim().split('\n').map(n => `- ${n}`).join('<br>') : '';
     
     return `
@@ -656,7 +663,7 @@ function generateQuote() {
             - Đơn giá đã bao gồm phí in ấn và giao hàng.<br>
             ${notes ? notes + '<br>' : ''}
             - Thời gian giao hàng : ${state.deliveryTime || 'Theo thỏa thuận'}.<br>
-            - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa và hóa đơn GTGT.<br>
+            - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa${invoiceText}<br>
         </div>
 
         <div class="signature-section">
@@ -676,6 +683,8 @@ function generateQuote() {
 
 function generateContract() {
     const totals = calculateTotals();
+    const hasTaxOrId = (state.customerTax && state.customerTax.trim() !== '') || (state.customerId && state.customerId.trim() !== '');
+    const invoiceText = hasTaxOrId ? ' và hóa đơn GTGT.' : '.';
     
     return `
         <div class="contract-header">
@@ -763,7 +772,7 @@ function generateContract() {
 
             <section class="contract-article payment-section">
                 <div class="contract-article-title article-title text-bold text-decoration-underline" style="margin-top: 15px; margin-bottom: 5px;">ĐIỀU 3: PHƯƠNG THỨC THANH TOÁN</div>
-                <p>- Bên A thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> (${docTienBangChu(totals.deposit)}) và thanh toán phần còn lại cho bên B với số tiền là: <b>${formatVND(totals.remain)} VNĐ</b> (${docTienBangChu(totals.remain)}) sau khi nhận đủ số lượng hàng hóa và hóa đơn GTGT.</p>
+                <p>- Bên A thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> (${docTienBangChu(totals.deposit)}) và thanh toán phần còn lại cho bên B với số tiền là: <b>${formatVND(totals.remain)} VNĐ</b> (${docTienBangChu(totals.remain)}) sau khi nhận đủ số lượng hàng hóa${invoiceText}</p>
                 <p>- Chuyển khoản trực tiếp vào STK: <b>${state.companyAccount} – ${state.companyName}</b>, ${state.companyBank} - ${state.companyBranch}.</p>
             </section>
 
