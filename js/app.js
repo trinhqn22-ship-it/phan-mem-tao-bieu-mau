@@ -90,6 +90,13 @@ function bindInputs() {
 }
 
 function bindActions() {
+    // Clear fixed deposit if user changes deposit percent
+    document.getElementById('depositPercent')?.addEventListener('input', () => {
+        state.depositAmountFixed = '';
+        const elFixed = document.getElementById('depositAmountFixed');
+        if (elFixed) elFixed.value = '';
+    });
+
     // Watermark Image Upload
     document.getElementById('watermarkImage')?.addEventListener('change', (e) => {
         const file = e.target.files[0];
