@@ -76,11 +76,19 @@ function bindInputs() {
                     state[key] = e.target.checked;
                     updatePreview();
                 });
+            } else if (el.tagName && el.tagName.toLowerCase() === 'select') {
+                if (state[key] === undefined) state[key] = defaultData[key];
+                el.value = state[key];
+                el.addEventListener('change', (e) => {
+                    state[key] = e.target.value;
+                    updatePreview();
+                });
             } else {
+                if (state[key] === undefined) state[key] = defaultData[key];
                 el.value = state[key];
                 el.addEventListener('input', (e) => {
                     let val = e.target.value;
-                    if (el.type === 'number') val = parseFloat(val) || 0;
+                    if (el.type === 'number') val = val === '' ? 0 : (parseFloat(val) || 0);
                     state[key] = val;
                     updatePreview();
                 });
