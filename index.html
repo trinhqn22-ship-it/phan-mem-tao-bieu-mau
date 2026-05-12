@@ -186,13 +186,15 @@
                             <label>Thuế GTGT (%)</label>
                             <input type="number" id="vatPercent" class="form-control" value="8">
                         </div>
-                        <div class="form-group">
-                            <label>Tỷ lệ cọc (%)</label>
-                            <input type="number" id="depositPercent" class="form-control" value="50">
-                        </div>
-                        <div class="form-group">
-                            <label>Tiền cọc (VNĐ)</label>
-                            <input type="number" id="depositAmountFixed" class="form-control" placeholder="Ví dụ: 1500000">
+                        <div class="form-group" style="flex: 2;">
+                            <label>Mức đặt cọc</label>
+                            <div class="input-group" style="display: flex; gap: 5px;">
+                                <input type="number" id="depositValue" class="form-control" value="50">
+                                <select id="depositType" class="form-control" style="width: auto; padding: 0 10px;">
+                                    <option value="%">%</option>
+                                    <option value="VND">VNĐ</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group checkbox-group">
