@@ -579,8 +579,6 @@ function generateOrder() {
             - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa và hóa đơn GTGT.<br>
             - Số tài khoản thanh toán : <b>${state.companyAccount} ${state.companyRep}</b> – Tại ${state.companyBank}, ${state.companyBranch}.<br>
             - Địa điểm giao hàng : ${state.deliveryAddress || state.customerAddress}<br>
-            <br>
-            Trân trọng kính chào!
         </div>
 
         <div class="signature-section">
@@ -659,8 +657,6 @@ function generateQuote() {
             ${notes ? notes + '<br>' : ''}
             - Thời gian giao hàng : ${state.deliveryTime || 'Theo thỏa thuận'}.<br>
             - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa và hóa đơn GTGT.<br>
-            <br>
-            Trân trọng kính chào!
         </div>
 
         <div class="signature-section">
