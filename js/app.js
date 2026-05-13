@@ -528,6 +528,13 @@ function generateOrder() {
         addressLabel = "Địa chỉ";
     }
     
+    let accountHeaderHtml = `${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.`;
+    let accountNoteHtml = `<b>${state.companyAccount} ${state.companyRep}</b> – Tại ${state.companyBank}, ${state.companyBranch}.`;
+    if (!hasTaxOrId) {
+        accountHeaderHtml = `9668197 NGUYỄN NGỌC TRÚC LINH - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
+        accountNoteHtml = `<b>9668197 NGUYỄN NGỌC TRÚC LINH</b> - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
+    }
+
     return `
         <table class="header-table">
             <tr>
@@ -548,7 +555,7 @@ function generateOrder() {
             </tr>
             <tr>
                 <td class="text-bold">Số tài khoản</td>
-                <td>: ${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.</td>
+                <td>: ${accountHeaderHtml}</td>
             </tr>
         </table>
 
@@ -587,7 +594,7 @@ function generateOrder() {
             <div class="text-bold text-decoration-underline" style="margin-bottom: 5px; text-decoration: underline;">Ghi chú:</div>
             - Thời gian giao hàng : ${state.deliveryTime || 'Theo thỏa thuận'}.<br>
             - Phương thức thanh toán : Thanh toán trước: <b>${formatVND(totals.deposit)} VNĐ</b> và thanh toán phần còn lại là: <b>${formatVND(totals.remain)} VNĐ</b> sau khi nhận đủ số lượng hàng hóa${invoiceText}<br>
-            - Số tài khoản thanh toán : <b>${state.companyAccount} ${state.companyRep}</b> – Tại ${state.companyBank}, ${state.companyBranch}.<br>
+            - Số tài khoản thanh toán : ${accountNoteHtml}<br>
             - Địa điểm giao hàng : ${state.deliveryAddress || state.customerAddress}<br>
         </div>
 
@@ -612,6 +619,11 @@ function generateQuote() {
     const invoiceText = hasTaxOrId ? ' và hóa đơn GTGT.' : '.';
     const notes = state.docNote.trim() ? state.docNote.trim().split('\n').map(n => `- ${n}`).join('<br>') : '';
     
+    let accountHeaderHtml = `${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.`;
+    if (!hasTaxOrId) {
+        accountHeaderHtml = `9668197 NGUYỄN NGỌC TRÚC LINH - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
+    }
+
     return `
         <table class="header-table">
             <tr>
@@ -632,7 +644,7 @@ function generateQuote() {
             </tr>
             <tr>
                 <td class="text-bold">Số tài khoản</td>
-                <td>: ${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.</td>
+                <td>: ${accountHeaderHtml}</td>
             </tr>
         </table>
 
