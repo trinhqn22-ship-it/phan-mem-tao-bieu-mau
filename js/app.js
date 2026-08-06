@@ -528,12 +528,8 @@ function generateOrder() {
         addressLabel = "Địa chỉ";
     }
     
-    let accountHeaderHtml = `${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.`;
-    let accountNoteHtml = `<b>${state.companyAccount} ${state.companyRep}</b> – Tại ${state.companyBank}, ${state.companyBranch}.`;
-    if (!hasTaxOrId) {
-        accountHeaderHtml = `9668197 NGUYỄN NGỌC TRÚC LINH - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
-        accountNoteHtml = `<b>9668197 NGUYỄN NGỌC TRÚC LINH</b> - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
-    }
+    const accountHeaderHtml = `${state.companyAccount} – ${state.companyName} – Tại ${state.companyBank} – ${state.companyBranch}.`;
+    const accountNoteHtml = `<b>${state.companyAccount} – ${state.companyName}</b> – Tại ${state.companyBank}, ${state.companyBranch}.`;
 
     return `
         <table class="header-table">
@@ -619,10 +615,7 @@ function generateQuote() {
     const invoiceText = hasTaxOrId ? ' và hóa đơn GTGT.' : '.';
     const notes = state.docNote.trim() ? state.docNote.trim().split('\n').map(n => `- ${n}`).join('<br>') : '';
     
-    let accountHeaderHtml = `${state.companyAccount} – Tại ${state.companyBank} – ${state.companyBranch}.`;
-    if (!hasTaxOrId) {
-        accountHeaderHtml = `9668197 NGUYỄN NGỌC TRÚC LINH - Tại ngân hàng TMCP Á Châu ACB, chi nhánh Bình Định`;
-    }
+    const accountHeaderHtml = `${state.companyAccount} – ${state.companyName} – Tại ${state.companyBank} – ${state.companyBranch}.`;
 
     return `
         <table class="header-table">
